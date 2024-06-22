@@ -1,0 +1,26 @@
+T:Guess the number between 1 and 9.
+A:
+M:1
+YJ:1
+M:2
+YJ:1
+M:3
+YJ:1
+M:4
+YJ:2
+M:5
+YJ:3
+M:6
+YJ:3
+M:7
+YJ:3
+M:8
+YJ:3
+M:9
+YJ:3
+*T:Too low! Try again.
+J:0
+*T:You did it! The answer was 4!
+S:
+*T:Too high! Try again.
+J:0
