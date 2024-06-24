@@ -3,7 +3,7 @@ import sys
 # whether or not a Waduzitdo program halts. This type of analysis cannot be performed on Turing complete
 # languages.
 
-def calculate(line, source, flag, accepted):
+def calculate(line, source, flag, accepted, match):
     # Fell off
     if line >= len(source):
         return True
@@ -29,6 +29,7 @@ def calculate(line, source, flag, accepted):
     # Make sure we know an A happened
     if s_line.startswith("A"):
         accepted = True
+        match = None
 
     # Jump to the provided line
     if s_line.startswith("J:"):
@@ -38,24 +39,26 @@ def calculate(line, source, flag, accepted):
             next_line += 1
             if source[next_line].startswith("*"):
                 jmp_amount -= 1
-        return calculate(next_line, source, flag, accepted)
+        return calculate(next_line, source, flag, accepted, match)
     
     # Match happens: create two branches to calculate both Y and N.
     if s_line.startswith("M:"):
         if accepted:
-            return calculate(line + 1, source, "Y", accepted) or calculate(line + 1, source, "N", accepted)
+            if match == s_line[2:]:
+                return calculate(line + 1, source, flag, accepted, s_line[2:])
+            return calculate(line + 1, source, "Y", accepted, s_line[2:]) or calculate(line + 1, source, "N", accepted, s_line[2:])
         else:
-            calculate(line + 1, source, "N", accepted)
+            calculate(line + 1, source, "N", accepted, match, None)
 
     # If we make it here, we probably skipped this line or it's a T line.
-    return calculate(line + 1, source, flag, accepted)
+    return calculate(line + 1, source, flag, accepted, match)
     
 def main():
     if len(sys.argv)>1:
         try:
             f=open(sys.argv[1])
             source = f.read()
-            if calculate(0, source.split("\n"), "N", False):
+            if calculate(0, source.split("\n"), "N", False, None):
                 print("This halts!")
             else:
                 print("This doesn't halt!")
