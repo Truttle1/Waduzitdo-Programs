@@ -51,7 +51,7 @@ def calculate(line, source, flag, accepted, match):
             else:
                 return calculate(line + 1, source, "Y", accepted, s_line[2:]) or calculate(line + 1, source, "N", accepted, s_line[2:])
         else:
-            calculate(line + 1, source, "N", accepted, match, None)
+            calculate(line + 1, source, "N", accepted, match)
 
     # If we make it here, we probably skipped this line or it's a T line.
     return calculate(line + 1, source, flag, accepted, match)
