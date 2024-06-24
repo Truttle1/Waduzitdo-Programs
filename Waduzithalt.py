@@ -1,5 +1,5 @@
 import sys
-# Because Waduzitdo is Turing incomplete, we can make a program in a Turing complete language that determines
+# Because Waduzitdo is not Turing incomplete, we can make a program in a Turing complete language that determines
 # whether or not a Waduzitdo program halts. This type of analysis cannot be performed on Turing complete
 # languages.
 
