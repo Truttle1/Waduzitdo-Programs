@@ -46,7 +46,10 @@ def calculate(line, source, flag, accepted, match):
         if accepted:
             if match == s_line[2:]:
                 return calculate(line + 1, source, flag, accepted, s_line[2:])
-            return calculate(line + 1, source, "Y", accepted, s_line[2:]) or calculate(line + 1, source, "N", accepted, s_line[2:])
+            elif match is not None:
+                return calculate(line + 1, source, "N" if flag == "Y" else "Y", accepted, s_line[2:])
+            else:
+                return calculate(line + 1, source, "Y", accepted, s_line[2:]) or calculate(line + 1, source, "N", accepted, s_line[2:])
         else:
             calculate(line + 1, source, "N", accepted, match, None)
 
